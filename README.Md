@@ -301,76 +301,37 @@ For further customization and advanced configurations, refer to the i3 documenta
     Create the `.vimrc` file in your user folder and add the following configurations. Each line includes a comment describing its purpose:
 
     ```vim
-    " Initialize plugin system
     call plug#begin()
-
-    " Fuzzy finder
+    
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
-
-    " File system explorer
     Plug 'preservim/nerdtree'
-
-    " Rust support
     Plug 'rust-lang/rust.vim'
-
-    " Icons for various plugins
     Plug 'ryanoasis/vim-devicons'
-
-    " Status/tab line
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-
-    " Code formatting
     Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
-
-    " End plugin system initialization
-    call plug#end()
-
-    " Set colors for end of buffer
-    highlight EndOfBuffer ctermfg=black ctermbg=black
-
-    " Set encoding to UTF-8
-    set encoding=UTF-8
-
-    " Set tab and shift width to 4 spaces
-    set ts=4 sw=4
-
-    " Enable mouse support in all modes
-    set mouse=v
-
-    " Show line numbers
-    set number
-
-    " Set number column width to 2
-    set numberwidth=2
-
-    " Improve command-line completion
-    set cpoptions+=n
-
-    " Use system clipboard
-    set clipboard=unnamed
-
-    " Set command for git grep
-    set gp=git\ grep\ -n
-
-    " Map Ctrl + A to select all
-    map <C-a> <esc>ggVG<CR>
-
-    " Map Ctrl + C to copy to system clipboard
-    map <C-c> "+y<CR>
-
-    " Keybindings for NERDTree
-    nnoremap <leader>r :NERDTreeFocus<CR>:NERDTreeFind<CR> " \ + r => Refresh Tree
-    nnoremap <leader>n :NERDTreeToggle<CR> " \ + n => Toggle Tree
-
-    " Open terminal below with 10 rows
-    nnoremap <leader>t :below terminal ++rows=10<CR>
     
-    " Toggle mouse mode with F12
-    map <silent><F12> :let &mouse=(&mouse == "a" ? "" : "a")<CR>:call ShowMouseMode()<CR>
-    imap <silent><F12> :let &mouse=(&mouse == "a" ? "" : "a")<CR>:call ShowMouseMode()<CR>
-
+    call plug#end()
+    
+    highlight EndOfBuffer ctermfg=black ctermbg=black
+    set encoding=UTF-8
+    set ts=2 sw=2
+    set mouse=v
+    set number
+    set numberwidth=2
+    set cpoptions+=n
+    set clipboard=unnamed
+    set gp=git\ grep\ -n
+    
+    map <C-a> <esc>ggVG<CR>
+    map <C-c> "+y<CR>
+    nnoremap <leader>t :below terminal ++rows=10<CR>
+    nnoremap <leader>r :NERDTreeFocus<CR>:NERDTreeFind<CR> # \ + r => Refresh Tree
+    nnoremap <leader>n :NERDTreeToggle<CR> # \ + n => Inicia Tree
+    " toggle between terminal and vim mouse
+    map <silent><F12> :let &mouse=(&mouse == "a"?"":"a")<CR>:call ShowMouseMode()<CR>
+    imap <silent><F12> :let &mouse=(&mouse == "a"?"":"a")<CR>:call ShowMouseMode()<CR>
     function ShowMouseMode()
         if (&mouse == 'a')
             echo "mouse-vim"
@@ -378,33 +339,42 @@ For further customization and advanced configurations, refer to the i3 documenta
             echo "mouse-xterm"
         endif
     endfunction
-
-    " Enable airline tabline
+    
+    let NERDTreeShowHidden=1
+    
+    let g:NERDTreeMouseMode=2
+    
     let g:airline#extensions#tabline#enabled = 1
+    
     let g:airline#extensions#tabline#left_sep = ' '
     let g:airline#extensions#tabline#left_alt_sep = '|'
+    
     let g:airline#extensions#tabline#formatter = 'unique_tail'
-
-    " NERDTree arrows
-    let g:NERDTreeDirArrowExpandable = "+"
-    let g:NERDTreeDirArrowCollapsible = "~"
-
-    " Enable powerline fonts for airline
+    
+    let g:NERDTreeDirArrowExpandable="+"
+    let g:NERDTreeDirArrowCollapsible="~"
+    
+    " air-line
     let g:airline_powerline_fonts = 1
-
+    
     if !exists('g:airline_symbols')
         let g:airline_symbols = {}
     endif
-
-    " Unicode symbols for airline
+    
+    " unicode symbols
     let g:airline_left_sep = '»'
+    let g:airline_left_sep = '▶'
     let g:airline_right_sep = '«'
+    let g:airline_right_sep = '◀'
+    let g:airline_symbols.linenr = '␊'
+    let g:airline_symbols.linenr = '␤'
     let g:airline_symbols.linenr = '¶'
     let g:airline_symbols.branch = '⎇'
     let g:airline_symbols.paste = 'ρ'
+    let g:airline_symbols.paste = 'Þ'
+    let g:airline_symbols.paste = '∥'
     let g:airline_symbols.whitespace = 'Ξ'
-
-    " Airline symbols
+    " airline symbols
     let g:airline_left_sep = ''
     let g:airline_left_alt_sep = ''
     let g:airline_right_sep = ''
@@ -412,8 +382,7 @@ For further customization and advanced configurations, refer to the i3 documenta
     let g:airline_symbols.branch = ''
     let g:airline_symbols.readonly = ''
     let g:airline_symbols.linenr = ''
-
-    " Enable Unicode folder icons in NERDTree
+    
     let g:WebDevIconsUnicodeDecorateFolderNodes = 1
     let g:WebDevIconsUnicodeDecorateFolderNodeDefaultSymbol = ''
     ```
